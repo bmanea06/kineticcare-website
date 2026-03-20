@@ -7,351 +7,108 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --dark:   #0A2342;
-      --teal:   #007B7F;
-      --teal2:  #009DA3;
-      --accent: #00C4C8;
-      --light:  #E8F4F5;
-      --white:  #FFFFFF;
-      --gray:   #8899AA;
-      --text:   #1a2e42;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--white);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ─────────────────────────────────────────────── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2.5rem;
-      height: 64px;
-      background: rgba(10, 35, 66, 0.96);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0,196,200,0.15);
-    }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem; font-weight: 600;
-      color: var(--white); letter-spacing: 0.02em;
-    }
-    .nav-logo span { color: var(--accent); }
-    .lang-switcher {
-      display: flex; gap: 0.25rem;
-    }
-    .lang-btn {
-      background: none; border: 1px solid rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.55); font-family: 'DM Sans', sans-serif;
-      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em;
-      padding: 0.3rem 0.7rem; border-radius: 2px; cursor: pointer;
-      transition: all 0.2s;
-    }
-    .lang-btn:hover, .lang-btn.active {
-      background: var(--teal); border-color: var(--teal);
-      color: var(--white);
-    }
-
-    /* ── HERO ────────────────────────────────────────────── */
-    .hero {
-      min-height: 100vh;
-      background: var(--dark);
-      display: flex; align-items: center;
-      position: relative; overflow: hidden;
-      padding: 80px 2.5rem 4rem;
-    }
-    .hero-bg {
-      position: absolute; inset: 0; pointer-events: none;
-    }
-    .hero-circle-1 {
-      position: absolute; right: -8vw; top: -10vh;
-      width: 55vw; height: 55vw; max-width: 700px; max-height: 700px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,157,163,0.18) 0%, transparent 70%);
-    }
-    .hero-circle-2 {
-      position: absolute; right: 4vw; top: 6vh;
-      width: 30vw; height: 30vw; max-width: 380px; max-height: 380px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,196,200,0.12) 0%, transparent 65%);
-    }
-    .hero-line {
-      position: absolute; left: 0; bottom: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--teal), var(--accent), transparent);
-    }
-    .hero-content {
-      position: relative; z-index: 2;
-      max-width: 680px;
-    }
-    .hero-tag {
-      display: inline-block;
-      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em;
-      color: var(--accent); text-transform: uppercase;
-      border: 1px solid rgba(0,196,200,0.35);
-      padding: 0.35rem 0.9rem; border-radius: 2px;
-      margin-bottom: 2rem;
-      animation: fadeUp 0.8s ease both;
-    }
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 6vw, 5rem);
-      font-weight: 300; line-height: 1.1;
-      color: var(--white);
-      animation: fadeUp 0.8s 0.1s ease both;
-    }
-    .hero h1 em {
-      font-style: italic; color: var(--accent);
-    }
-    .hero-sub {
-      margin-top: 1.5rem;
-      font-size: 1.05rem; font-weight: 300; line-height: 1.7;
-      color: rgba(255,255,255,0.65);
-      max-width: 520px;
-      animation: fadeUp 0.8s 0.2s ease both;
-    }
-    .hero-cta {
-      margin-top: 2.5rem;
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      animation: fadeUp 0.8s 0.3s ease both;
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: var(--teal); color: var(--white);
-      font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
-      font-weight: 500; letter-spacing: 0.05em;
-      padding: 0.85rem 1.8rem; border-radius: 2px;
-      text-decoration: none; border: none; cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .btn-primary:hover { background: var(--teal2); transform: translateY(-1px); }
-    .btn-ghost {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: transparent; color: rgba(255,255,255,0.75);
-      font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
-      font-weight: 400; letter-spacing: 0.05em;
-      padding: 0.85rem 1.8rem; border-radius: 2px;
-      text-decoration: none; border: 1px solid rgba(255,255,255,0.2);
-      transition: all 0.2s;
-    }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ── STATS BAR ───────────────────────────────────────── */
-    .stats-bar {
-      background: var(--teal);
-      padding: 2rem 2.5rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
-    }
-    .stat-item { text-align: center; }
-    .stat-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem; font-weight: 600;
-      color: var(--white); line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.75rem; font-weight: 400; letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.75);
-      margin-top: 0.3rem;
-    }
-
-    /* ── MISSION ─────────────────────────────────────────── */
-    .section {
-      padding: 6rem 2.5rem;
-      max-width: 1100px; margin: 0 auto;
-    }
-    .section-tag {
-      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em;
-      color: var(--teal); text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 300; line-height: 1.2;
-      color: var(--dark);
-    }
-    .section-title em { font-style: italic; color: var(--teal); }
-    .section-body {
-      margin-top: 1.5rem;
-      font-size: 1rem; font-weight: 300; line-height: 1.8;
-      color: #3a4e62; max-width: 640px;
-    }
-
-    .mission-grid {
-      margin-top: 3.5rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-    }
-    .mission-card {
-      background: var(--light);
-      border-left: 3px solid var(--teal);
-      padding: 1.8rem 1.5rem;
-      border-radius: 0 4px 4px 0;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .mission-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 32px rgba(0,123,127,0.12);
-    }
-    .mission-card-icon {
-      font-size: 1.5rem; margin-bottom: 0.8rem;
-    }
-    .mission-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem; font-weight: 600;
-      color: var(--dark); margin-bottom: 0.5rem;
-    }
-    .mission-card p {
-      font-size: 0.88rem; font-weight: 300; line-height: 1.7;
-      color: #3a4e62;
-    }
-
-    /* ── DIVIDER ─────────────────────────────────────────── */
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--teal), transparent);
-      margin: 0 2.5rem;
-      opacity: 0.3;
-    }
-
-    /* ── CONTACT ─────────────────────────────────────────── */
-    .contact-section {
-      background: var(--dark);
-      padding: 6rem 2.5rem;
-    }
-    .contact-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 5rem; align-items: start;
-    }
-    .contact-info .section-tag { color: var(--accent); }
-    .contact-info .section-title { color: var(--white); }
-    .contact-info .section-body { color: rgba(255,255,255,0.6); }
-    .contact-details {
-      margin-top: 2.5rem;
-      display: flex; flex-direction: column; gap: 1rem;
-    }
-    .contact-row {
-      display: flex; align-items: center; gap: 0.8rem;
-      font-size: 0.9rem; color: rgba(255,255,255,0.75);
-    }
-    .contact-row a {
-      color: var(--accent); text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .contact-row a:hover { opacity: 0.75; }
-    .contact-icon {
-      width: 32px; height: 32px;
-      background: rgba(0,196,200,0.15);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; flex-shrink: 0;
-    }
-
-    /* Form */
-    .contact-form {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 4px;
-      padding: 2.5rem;
-    }
-    .form-group { margin-bottom: 1.2rem; }
-    .form-group label {
-      display: block;
-      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
-      text-transform: uppercase; color: rgba(255,255,255,0.5);
-      margin-bottom: 0.4rem;
-    }
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 2px;
-      padding: 0.75rem 1rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem; font-weight: 300;
-      color: var(--white);
-      transition: border-color 0.2s;
-      outline: none;
-    }
-    .form-group input::placeholder,
-    .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: var(--accent);
-      background: rgba(0,196,200,0.05);
-    }
-    .form-group textarea { resize: vertical; min-height: 110px; }
-    .form-group select option { background: var(--dark); color: var(--white); }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-submit {
-      width: 100%; margin-top: 0.5rem;
-      background: var(--teal); color: var(--white);
-      font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
-      font-weight: 500; letter-spacing: 0.06em;
-      padding: 0.9rem; border: none; border-radius: 2px;
-      cursor: pointer; transition: background 0.2s;
-    }
-    .form-submit:hover { background: var(--teal2); }
-    .form-note {
-      margin-top: 1rem;
-      font-size: 0.75rem; color: rgba(255,255,255,0.3);
-      text-align: center; line-height: 1.5;
-    }
-
-    /* ── FOOTER ──────────────────────────────────────────── */
-    footer {
-      background: #060f1e;
-      padding: 1.5rem 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 0.5rem;
-    }
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem; color: rgba(255,255,255,0.4);
-    }
-    .footer-logo span { color: var(--accent); }
-    .footer-copy {
-      font-size: 0.75rem; color: rgba(255,255,255,0.25);
-    }
-
-    /* ── ANIMATIONS ──────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── RESPONSIVE ──────────────────────────────────────── */
-    @media (max-width: 768px) {
-      nav { padding: 0 1.2rem; }
-      .hero { padding: 80px 1.2rem 3rem; }
-      .stats-bar { padding: 1.5rem 1.2rem; }
-      .section { padding: 4rem 1.2rem; }
-      .contact-section { padding: 4rem 1.2rem; }
-      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
-      .form-row { grid-template-columns: 1fr; }
-      footer { padding: 1.2rem; flex-direction: column; text-align: center; }
-      .divider { margin: 0 1.2rem; }
-    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--dark:#0A2342;--teal:#007B7F;--teal2:#009DA3;--accent:#00C4C8;--light:#E8F4F5;--white:#FFFFFF;--text:#1a2e42}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;background:rgba(10,35,66,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,196,200,0.15)}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--white);letter-spacing:.02em}
+    .nav-logo span{color:var(--accent)}
+    .lang-switcher{display:flex;gap:.25rem}
+    .lang-btn{background:none;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.55);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.08em;padding:.3rem .7rem;border-radius:2px;cursor:pointer;transition:all .2s}
+    .lang-btn:hover,.lang-btn.active{background:var(--teal);border-color:var(--teal);color:var(--white)}
+    .hero{min-height:100vh;background:var(--dark);display:grid;grid-template-columns:1fr 1fr;padding-top:64px;overflow:hidden}
+    .hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 3rem 5rem 3.5rem;position:relative;z-index:2}
+    .hero-right{position:relative;overflow:hidden}
+    .hero-right img{width:100%;height:100%;object-fit:cover;filter:brightness(.65) saturate(.85)}
+    .hero-right::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--dark) 0%,transparent 45%)}
+    .hero-tag{display:inline-block;font-size:.7rem;font-weight:500;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;border:1px solid rgba(0,196,200,0.35);padding:.35rem .9rem;border-radius:2px;margin-bottom:2rem;animation:fadeUp .8s ease both}
+    .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,4.5vw,4.2rem);font-weight:300;line-height:1.15;color:var(--white);animation:fadeUp .8s .1s ease both}
+    .hero h1 em{font-style:italic;color:var(--accent)}
+    .hero-sub{margin-top:1.5rem;font-size:1rem;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.65);animation:fadeUp .8s .2s ease both}
+    .hero-cta{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .8s .3s ease both}
+    .btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal);color:var(--white);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;letter-spacing:.05em;padding:.85rem 1.8rem;border-radius:2px;text-decoration:none;border:none;cursor:pointer;transition:background .2s,transform .2s}
+    .btn-primary:hover{background:var(--teal2);transform:translateY(-1px)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:rgba(255,255,255,0.75);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:400;letter-spacing:.05em;padding:.85rem 1.8rem;border-radius:2px;text-decoration:none;border:1px solid rgba(255,255,255,0.2);transition:all .2s}
+    .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+    .stats-bar{background:var(--teal);padding:2rem 2.5rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+    .stat-item{text-align:center}
+    .stat-value{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:600;color:var(--white);line-height:1}
+    .stat-label{font-size:.75rem;font-weight:400;letter-spacing:.05em;color:rgba(255,255,255,0.8);margin-top:.3rem}
+    .what-section{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
+    .what-image{position:relative;overflow:hidden}
+    .what-image img{width:100%;height:100%;object-fit:cover}
+    .what-image-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,123,127,0.25),rgba(10,35,66,0.45))}
+    .what-image-badge{position:absolute;bottom:2rem;left:2rem;background:rgba(0,196,200,0.92);color:var(--dark);font-weight:600;font-size:.8rem;padding:.5rem 1rem;border-radius:2px;letter-spacing:.05em}
+    .what-content{background:var(--dark);padding:5rem 3.5rem;display:flex;flex-direction:column;justify-content:center}
+    .section-tag{font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;margin-bottom:1rem}
+    .what-content .section-tag{color:var(--accent)}
+    .what-content h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;line-height:1.2;color:var(--white)}
+    .what-content h2 em{font-style:italic;color:var(--accent)}
+    .what-content p{margin-top:1.5rem;font-size:.95rem;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.65)}
+    .what-points{margin-top:2rem;display:flex;flex-direction:column;gap:.9rem}
+    .what-point{display:flex;align-items:flex-start;gap:.8rem}
+    .what-point-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:.5rem}
+    .what-point-text{font-size:.9rem;font-weight:300;color:rgba(255,255,255,0.75);line-height:1.5}
+    .how-section{padding:6rem 2.5rem;background:#f8fbfb}
+    .how-inner{max-width:1100px;margin:0 auto}
+    .how-inner .section-tag{color:var(--teal)}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.2;color:var(--dark)}
+    .section-title em{font-style:italic;color:var(--teal)}
+    .how-grid{margin-top:3.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+    .how-card{background:var(--white);border-radius:4px;overflow:hidden;box-shadow:0 4px 24px rgba(0,123,127,0.08);transition:transform .2s,box-shadow .2s}
+    .how-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,123,127,0.15)}
+    .how-card-image{height:200px;overflow:hidden;position:relative}
+    .how-card-image img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .how-card:hover .how-card-image img{transform:scale(1.05)}
+    .how-card-image-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(10,35,66,0.55) 100%)}
+    .how-card-num{position:absolute;top:1rem;left:1rem;width:36px;height:36px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:600;color:var(--dark)}
+    .how-card-body{padding:1.5rem}
+    .how-card-body h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--dark);margin-bottom:.6rem}
+    .how-card-body p{font-size:.88rem;font-weight:300;line-height:1.7;color:#3a4e62}
+    .mission-section{padding:6rem 2.5rem}
+    .mission-inner{max-width:1100px;margin:0 auto}
+    .mission-inner .section-tag{color:var(--teal)}
+    .mission-grid{margin-top:3.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+    .mission-card{background:var(--light);border-left:3px solid var(--teal);padding:1.8rem 1.5rem;border-radius:0 4px 4px 0;transition:transform .2s,box-shadow .2s}
+    .mission-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,123,127,0.12)}
+    .mission-card-icon{font-size:1.5rem;margin-bottom:.8rem}
+    .mission-card h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--dark);margin-bottom:.5rem}
+    .mission-card p{font-size:.88rem;font-weight:300;line-height:1.7;color:#3a4e62}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent);margin:0 2.5rem;opacity:.25}
+    .contact-section{background:var(--dark);padding:6rem 2.5rem}
+    .contact-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+    .contact-info .section-tag{color:var(--accent)}
+    .contact-info .section-title{color:var(--white)}
+    .contact-body{margin-top:1.5rem;font-size:1rem;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.6)}
+    .contact-details{margin-top:2.5rem;display:flex;flex-direction:column;gap:1rem}
+    .contact-row{display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:rgba(255,255,255,0.75)}
+    .contact-row a{color:var(--accent);text-decoration:none;transition:opacity .2s}
+    .contact-row a:hover{opacity:.75}
+    .contact-icon{width:32px;height:32px;background:rgba(0,196,200,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+    .contact-form{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:4px;padding:2.5rem}
+    .form-group{margin-bottom:1.2rem}
+    .form-group label{display:block;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:.4rem}
+    .form-group input,.form-group textarea,.form-group select{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:2px;padding:.75rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:300;color:var(--white);transition:border-color .2s;outline:none}
+    .form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,0.25)}
+    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--accent);background:rgba(0,196,200,0.05)}
+    .form-group textarea{resize:vertical;min-height:110px}
+    .form-group select option{background:var(--dark);color:var(--white)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .form-submit{width:100%;margin-top:.5rem;background:var(--teal);color:var(--white);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;letter-spacing:.06em;padding:.9rem;border:none;border-radius:2px;cursor:pointer;transition:background .2s}
+    .form-submit:hover{background:var(--teal2)}
+    .form-note{margin-top:1rem;font-size:.75rem;color:rgba(255,255,255,0.3);text-align:center;line-height:1.5}
+    footer{background:#060f1e;padding:1.5rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(255,255,255,0.4)}
+    .footer-logo span{color:var(--accent)}
+    .footer-copy{font-size:.75rem;color:rgba(255,255,255,0.25)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-right{height:300px}.what-section{grid-template-columns:1fr}.what-image{height:300px}.how-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}.contact-inner{grid-template-columns:1fr;gap:3rem}.form-row{grid-template-columns:1fr}}
+    @media(max-width:600px){nav{padding:0 1.2rem}.hero-left{padding:3rem 1.5rem}.what-content{padding:3rem 1.5rem}.how-section,.mission-section,.contact-section{padding:4rem 1.2rem}.stats-bar{padding:1.5rem 1.2rem}footer{padding:1.2rem;flex-direction:column;text-align:center}}
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo">Kinetic<span>Care</span></div>
   <div class="lang-switcher">
@@ -361,119 +118,125 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <div class="hero-circle-1"></div>
-    <div class="hero-circle-2"></div>
-    <div class="hero-line"></div>
-  </div>
-  <div class="hero-content">
+  <div class="hero-left">
     <div class="hero-tag" data-i18n="hero_tag">Robotica Indossabile · Silver Economy</div>
     <h1 data-i18n="hero_h1">Restituire <em>autonomia</em><br>e dignità agli anziani.</h1>
-    <p class="hero-sub" data-i18n="hero_sub">KineticCare Italia integra tecnologia robotica avanzata e fisioterapia personalizzata per il mercato italiano ed europeo.</p>
+    <p class="hero-sub" data-i18n="hero_sub">KineticCare Italia porta la tecnologia degli esoscheletri indossabili nel mercato italiano ed europeo, per ridare mobilità e indipendenza a chi ne ha più bisogno.</p>
     <div class="hero-cta">
       <a href="#contact" class="btn-primary" data-i18n="hero_cta1">Contattaci</a>
-      <a href="#mission" class="btn-ghost" data-i18n="hero_cta2">Scopri di più</a>
+      <a href="#how" class="btn-ghost" data-i18n="hero_cta2">Come funziona</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=900&q=80&fit=crop" alt="Riabilitazione robotica" />
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-value">#1</div><div class="stat-label" data-i18n="stat1">Paese più anziano dell'UE</div></div>
+  <div class="stat-item"><div class="stat-value">14.8M</div><div class="stat-label" data-i18n="stat2">Italiani over 65 oggi</div></div>
+  <div class="stat-item"><div class="stat-value">+19%</div><div class="stat-label" data-i18n="stat3">CAGR mercato esoscheletri</div></div>
+  <div class="stat-item"><div class="stat-value">€46B</div><div class="stat-label" data-i18n="stat4">Sanità privata italiana 2030</div></div>
+</div>
+
+<section class="what-section" id="mission">
+  <div class="what-image">
+    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=900&q=80&fit=crop" alt="Esoscheletro riabilitazione" loading="lazy" />
+    <div class="what-image-overlay"></div>
+    <div class="what-image-badge" data-i18n="what_badge">Tecnologia CE MDR</div>
+  </div>
+  <div class="what-content">
+    <div class="section-tag" data-i18n="what_tag">Cosa facciamo</div>
+    <h2 data-i18n="what_title">Un <em>esoscheletro</em><br>per chi vuole tornare a camminare.</h2>
+    <p data-i18n="what_body">Un esoscheletro è un dispositivo robotico indossabile che si applica agli arti inferiori e assiste il movimento di chi ha difficoltà motorie. Attraverso sensori e attuatori motorizzati, supporta ogni passo — permettendo ad anziani, pazienti post-ictus e persone in riabilitazione di recuperare mobilità e autonomia.</p>
+    <div class="what-points">
+      <div class="what-point"><div class="what-point-dot"></div><div class="what-point-text" data-i18n="what_p1">Indicato per anziani con limitazioni motorie, post-ictus, post-chirurgici</div></div>
+      <div class="what-point"><div class="what-point-dot"></div><div class="what-point-text" data-i18n="what_p2">Uso domiciliare e clinico — leggero, personalizzabile, semplice da indossare</div></div>
+      <div class="what-point"><div class="what-point-dot"></div><div class="what-point-text" data-i18n="what_p3">Prezzo accessibile sotto i €3.000 — primo nel segmento in Italia</div></div>
     </div>
   </div>
 </section>
 
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-value">#1</div>
-    <div class="stat-label" data-i18n="stat1">Paese più anziano dell'UE</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-value">14.8M</div>
-    <div class="stat-label" data-i18n="stat2">Italiani over 65 oggi</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-value">+19%</div>
-    <div class="stat-label" data-i18n="stat3">CAGR mercato globale esoscheletri</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-value">€46B</div>
-    <div class="stat-label" data-i18n="stat4">Sanità privata italiana al 2030</div>
-  </div>
-</div>
-
-<!-- MISSION -->
-<section class="section" id="mission">
-  <div class="section-tag" data-i18n="mission_tag">Chi siamo</div>
-  <h2 class="section-title" data-i18n="mission_title">Una <em>visione</em> per la mobilità del futuro.</h2>
-  <p class="section-body" data-i18n="mission_body">KineticCare Italia è un progetto dedicato all'importazione, validazione e distribuzione di tecnologie robotiche indossabili — esoscheletri — per il mercato italiano ed europeo. Il nostro obiettivo è colmare il divario tra l'innovazione tecnologica asiatica e il mercato clinico europeo, rendendo accessibile la robotica avanzata a chi ne ha più bisogno.</p>
-
-  <div class="mission-grid">
-    <div class="mission-card">
-      <div class="mission-card-icon">🏥</div>
-      <h3 data-i18n="card1_title">Rete Clinica</h3>
-      <p data-i18n="card1_body">Collaborazioni dirette con cliniche di fisioterapia, centri di riabilitazione e RSA per test, validazione e distribuzione B2B.</p>
-    </div>
-    <div class="mission-card">
-      <div class="mission-card-icon">📋</div>
-      <h3 data-i18n="card2_title">Certificazione CE MDR</h3>
-      <p data-i18n="card2_body">Gestione completa del processo di certificazione europea (EU 2017/745) e conformità GDPR per dispositivi medici robotici.</p>
-    </div>
-    <div class="mission-card">
-      <div class="mission-card-icon">🌍</div>
-      <h3 data-i18n="card3_title">Gateway Europeo</h3>
-      <p data-i18n="card3_body">L'Italia come mercato di lancio, con un modello scalabile verso Germania, Francia, Spagna e l'intero mercato UE.</p>
-    </div>
-    <div class="mission-card">
-      <div class="mission-card-icon">🤝</div>
-      <h3 data-i18n="card4_title">Modello Tri-Canale</h3>
-      <p data-i18n="card4_body">Vendita B2B a strutture sanitarie, B2C via e-commerce con consulenza fisioterapica, e noleggio a lungo termine per riabilitazione post-chirurgica.</p>
+<section class="how-section" id="how">
+  <div class="how-inner">
+    <div class="section-tag" data-i18n="how_tag">Il nostro modello</div>
+    <h2 class="section-title" data-i18n="how_title">Come <em>portiamo</em> la tecnologia al paziente.</h2>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-card-image">
+          <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=600&q=80&fit=crop" alt="Certificazione medica" loading="lazy" />
+          <div class="how-card-image-overlay"></div>
+          <div class="how-card-num">01</div>
+        </div>
+        <div class="how-card-body">
+          <h3 data-i18n="how1_title">Importazione & Certificazione</h3>
+          <p data-i18n="how1_body">Importiamo esoscheletri dal partner produttore in Asia e gestiamo il processo CE MDR (EU 2017/745), rendendo il prodotto commerciabile in tutta Europa.</p>
+        </div>
+      </div>
+      <div class="how-card">
+        <div class="how-card-image">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80&fit=crop" alt="Distribuzione clinica" loading="lazy" />
+          <div class="how-card-image-overlay"></div>
+          <div class="how-card-num">02</div>
+        </div>
+        <div class="how-card-body">
+          <h3 data-i18n="how2_title">Distribuzione Clinica & Retail</h3>
+          <p data-i18n="how2_body">Tre canali: vendita B2B a cliniche e RSA, vendita B2C diretta con consulenza fisioterapica, e noleggio mensile per riabilitazione post-operatoria.</p>
+        </div>
+      </div>
+      <div class="how-card">
+        <div class="how-card-image">
+          <img src="https://images.unsplash.com/photo-1576765608622-067973a79f53?w=600&q=80&fit=crop" alt="Assistenza tecnica" loading="lazy" />
+          <div class="how-card-image-overlay"></div>
+          <div class="how-card-num">03</div>
+        </div>
+        <div class="how-card-body">
+          <h3 data-i18n="how3_title">Assistenza & Dopo-Vendita</h3>
+          <p data-i18n="how3_body">Centro tecnico a Casale Monferrato per manutenzione, garanzia e ricambi. Supporto fisioterapico e monitoraggio continuativo del percorso di recupero.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- CONTACT -->
+<section class="mission-section">
+  <div class="mission-inner">
+    <div class="section-tag" data-i18n="mission_tag">I nostri asset</div>
+    <h2 class="section-title" data-i18n="mission_title">Perché <em>KineticCare</em> è il partner giusto.</h2>
+    <div class="mission-grid">
+      <div class="mission-card"><div class="mission-card-icon">🏥</div><h3 data-i18n="card1_title">Rete Clinica</h3><p data-i18n="card1_body">Collaborazioni con cliniche, centri di riabilitazione e RSA per test, validazione e distribuzione B2B in tutta Italia.</p></div>
+      <div class="mission-card"><div class="mission-card-icon">📋</div><h3 data-i18n="card2_title">Certificazione CE MDR</h3><p data-i18n="card2_body">Gestione completa della certificazione europea (EU 2017/745) e conformità GDPR per dispositivi medici robotici.</p></div>
+      <div class="mission-card"><div class="mission-card-icon">🌍</div><h3 data-i18n="card3_title">Gateway Europeo</h3><p data-i18n="card3_body">Italia come mercato di lancio. Modello scalabile verso Germania, Francia, Spagna e l'intero mercato UE.</p></div>
+      <div class="mission-card"><div class="mission-card-icon">🤝</div><h3 data-i18n="card4_title">Modello Tri-Canale</h3><p data-i18n="card4_body">B2B a strutture sanitarie, B2C via e-commerce con consulenza fisioterapica, e noleggio a lungo termine per riabilitazione.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <section class="contact-section" id="contact">
   <div class="contact-inner">
     <div class="contact-info">
       <div class="section-tag" data-i18n="contact_tag">Contatti</div>
       <h2 class="section-title" data-i18n="contact_title">Parliamo <em>insieme.</em></h2>
-      <p class="section-body" data-i18n="contact_body">Sei un produttore, un distributore, un operatore sanitario o un investitore interessato alla Silver Economy europea? Scrivici — risponderemo entro 24 ore.</p>
+      <p class="contact-body" data-i18n="contact_body">Sei un produttore, distributore, operatore sanitario o investitore interessato alla Silver Economy europea? Scrivici — risponderemo entro 24 ore.</p>
       <div class="contact-details">
-        <div class="contact-row">
-          <div class="contact-icon">📧</div>
-          <span><a href="mailto:business@kineticcare.it">business@kineticcare.it</a></span>
-        </div>
-        <div class="contact-row">
-          <div class="contact-icon">💬</div>
-          <span data-i18n="wechat_label">WeChat: <strong style="color:var(--accent)">bogdan_kineticcare</strong></span>
-        </div>
-        <div class="contact-row">
-          <div class="contact-icon">📍</div>
-          <span data-i18n="location">Casale Monferrato, Italia</span>
-        </div>
-        <div class="contact-row">
-          <div class="contact-icon">🌐</div>
-          <span><a href="https://www.kineticcare.it">www.kineticcare.it</a></span>
-        </div>
+        <div class="contact-row"><div class="contact-icon">📧</div><span><a href="mailto:business@kineticcare.it">business@kineticcare.it</a></span></div>
+        <div class="contact-row"><div class="contact-icon">💬</div><span data-i18n="wechat_label">WeChat: <strong style="color:var(--accent)">bogdan_kineticcare</strong></span></div>
+        <div class="contact-row"><div class="contact-icon">📍</div><span data-i18n="location">Casale Monferrato, Italia</span></div>
+        <div class="contact-row"><div class="contact-icon">🌐</div><span><a href="https://www.kineticcare.it">www.kineticcare.it</a></span></div>
       </div>
     </div>
-
     <div class="contact-form">
       <form id="contactForm" onsubmit="submitForm(event)">
         <div class="form-row">
-          <div class="form-group">
-            <label data-i18n="form_name">Nome</label>
-            <input type="text" name="name" required placeholder="Bogdan Manea" />
-          </div>
-          <div class="form-group">
-            <label data-i18n="form_company">Azienda</label>
-            <input type="text" name="company" placeholder="Azienda S.r.l." />
-          </div>
+          <div class="form-group"><label data-i18n="form_name">Nome</label><input type="text" name="name" required placeholder="Mario Rossi" /></div>
+          <div class="form-group"><label data-i18n="form_company">Azienda</label><input type="text" name="company" placeholder="Azienda S.r.l." /></div>
         </div>
-        <div class="form-group">
-          <label data-i18n="form_email">Email</label>
-          <input type="email" name="email" required placeholder="nome@azienda.com" />
-        </div>
+        <div class="form-group"><label data-i18n="form_email">Email</label><input type="email" name="email" required placeholder="nome@azienda.com" /></div>
         <div class="form-group">
           <label data-i18n="form_role_label">Ruolo / Interesse</label>
           <select name="role">
@@ -485,212 +248,28 @@
             <option value="other" data-i18n="form_role_5">Altro</option>
           </select>
         </div>
-        <div class="form-group">
-          <label data-i18n="form_message">Messaggio</label>
-          <textarea name="message" placeholder="..." data-i18n-placeholder="form_message_ph"></textarea>
-        </div>
+        <div class="form-group"><label data-i18n="form_message">Messaggio</label><textarea name="message" placeholder="..." data-i18n-placeholder="form_message_ph"></textarea></div>
         <button type="submit" class="form-submit" data-i18n="form_submit">Invia messaggio</button>
         <p class="form-note" data-i18n="form_note">Risponderemo entro 24 ore lavorative.</p>
       </form>
-      <div id="formSuccess" style="display:none; text-align:center; padding:2rem 0;">
-        <div style="font-size:2rem; margin-bottom:1rem;">✅</div>
-        <p style="color:var(--accent); font-size:1rem;" data-i18n="form_success">Messaggio inviato! Ti risponderemo presto.</p>
+      <div id="formSuccess" style="display:none;text-align:center;padding:2rem 0;">
+        <div style="font-size:2rem;margin-bottom:1rem;">✅</div>
+        <p style="color:var(--accent);font-size:1rem;" data-i18n="form_success">Messaggio inviato! Ti risponderemo presto.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">Kinetic<span>Care</span> Italia</div>
   <div class="footer-copy" data-i18n="footer_copy">© 2026 KineticCare Italia · Casale Monferrato · business@kineticcare.it</div>
 </footer>
 
 <script>
-// ── i18n ──────────────────────────────────────────────────────────────────────
-const i18n = {
-  it: {
-    hero_tag: "Robotica Indossabile · Silver Economy",
-    hero_h1: 'Restituire <em>autonomia</em><br>e dignità agli anziani.',
-    hero_sub: "KineticCare Italia integra tecnologia robotica avanzata e fisioterapia personalizzata per il mercato italiano ed europeo.",
-    hero_cta1: "Contattaci",
-    hero_cta2: "Scopri di più",
-    stat1: "Paese più anziano dell'UE",
-    stat2: "Italiani over 65 oggi",
-    stat3: "CAGR mercato globale esoscheletri",
-    stat4: "Sanità privata italiana al 2030",
-    mission_tag: "Chi siamo",
-    mission_title: 'Una <em>visione</em> per la mobilità del futuro.',
-    mission_body: "KineticCare Italia è un progetto dedicato all'importazione, validazione e distribuzione di tecnologie robotiche indossabili — esoscheletri — per il mercato italiano ed europeo. Il nostro obiettivo è colmare il divario tra l'innovazione tecnologica asiatica e il mercato clinico europeo, rendendo accessibile la robotica avanzata a chi ne ha più bisogno.",
-    card1_title: "Rete Clinica",
-    card1_body: "Collaborazioni dirette con cliniche di fisioterapia, centri di riabilitazione e RSA per test, validazione e distribuzione B2B.",
-    card2_title: "Certificazione CE MDR",
-    card2_body: "Gestione completa del processo di certificazione europea (EU 2017/745) e conformità GDPR per dispositivi medici robotici.",
-    card3_title: "Gateway Europeo",
-    card3_body: "L'Italia come mercato di lancio, con un modello scalabile verso Germania, Francia, Spagna e l'intero mercato UE.",
-    card4_title: "Modello Tri-Canale",
-    card4_body: "Vendita B2B a strutture sanitarie, B2C via e-commerce con consulenza fisioterapica, e noleggio a lungo termine per riabilitazione post-chirurgica.",
-    contact_tag: "Contatti",
-    contact_title: 'Parliamo <em>insieme.</em>',
-    contact_body: "Sei un produttore, un distributore, un operatore sanitario o un investitore interessato alla Silver Economy europea? Scrivici — risponderemo entro 24 ore.",
-    wechat_label: 'WeChat: <strong style="color:var(--accent)">bogdan_kineticcare</strong>',
-    location: "Casale Monferrato, Italia",
-    form_name: "Nome",
-    form_company: "Azienda",
-    form_email: "Email",
-    form_role_label: "Ruolo / Interesse",
-    form_role_default: "Seleziona...",
-    form_role_1: "Produttore / Fornitore",
-    form_role_2: "Clinica / Centro Riabilitazione",
-    form_role_3: "Investitore / Partner",
-    form_role_4: "Distributore",
-    form_role_5: "Altro",
-    form_message: "Messaggio",
-    form_message_ph: "Raccontaci brevemente il tuo interesse...",
-    form_submit: "Invia messaggio",
-    form_note: "Risponderemo entro 24 ore lavorative.",
-    form_success: "Messaggio inviato! Ti risponderemo presto.",
-    footer_copy: "© 2026 KineticCare Italia · Casale Monferrato · business@kineticcare.it",
-  },
-  en: {
-    hero_tag: "Wearable Robotics · Silver Economy",
-    hero_h1: 'Restoring <em>autonomy</em><br>and dignity to the elderly.',
-    hero_sub: "KineticCare Italia brings advanced wearable exoskeleton technology to the Italian and European market, bridging Asian innovation with European clinical needs.",
-    hero_cta1: "Contact us",
-    hero_cta2: "Learn more",
-    stat1: "Oldest population in the EU",
-    stat2: "Italians over 65 today",
-    stat3: "CAGR global exoskeleton market",
-    stat4: "Italian private healthcare by 2030",
-    mission_tag: "About us",
-    mission_title: 'A <em>vision</em> for the mobility of tomorrow.',
-    mission_body: "KineticCare Italia is a venture dedicated to importing, validating, and distributing wearable robotic technologies — exoskeletons — for the Italian and European market. Our goal is to bridge the gap between Asian technological innovation and the European clinical market, making advanced robotics accessible to those who need it most.",
-    card1_title: "Clinical Network",
-    card1_body: "Direct relationships with physiotherapy clinics, rehabilitation centers, and nursing homes for testing, validation, and B2B distribution.",
-    card2_title: "CE MDR Certification",
-    card2_body: "Full management of the European certification process (EU 2017/745) and GDPR compliance for robotic medical devices.",
-    card3_title: "European Gateway",
-    card3_body: "Italy as the launch market, with a scalable model toward Germany, France, Spain, and the entire EU.",
-    card4_title: "Tri-Channel Model",
-    card4_body: "B2B sales to healthcare facilities, B2C via e-commerce with physiotherapy consultation, and long-term rental for post-surgical rehabilitation.",
-    contact_tag: "Contact",
-    contact_title: "Let's talk <em>together.</em>",
-    contact_body: "Are you a manufacturer, distributor, healthcare operator, or investor interested in the European Silver Economy? Write to us — we'll reply within 24 hours.",
-    wechat_label: 'WeChat: <strong style="color:var(--accent)">bogdan_kineticcare</strong>',
-    location: "Casale Monferrato, Italy",
-    form_name: "Name",
-    form_company: "Company",
-    form_email: "Email",
-    form_role_label: "Role / Interest",
-    form_role_default: "Select...",
-    form_role_1: "Manufacturer / Supplier",
-    form_role_2: "Clinic / Rehabilitation Center",
-    form_role_3: "Investor / Partner",
-    form_role_4: "Distributor",
-    form_role_5: "Other",
-    form_message: "Message",
-    form_message_ph: "Tell us briefly about your interest...",
-    form_submit: "Send message",
-    form_note: "We will reply within 24 business hours.",
-    form_success: "Message sent! We'll get back to you soon.",
-    footer_copy: "© 2026 KineticCare Italia · Casale Monferrato · business@kineticcare.it",
-  },
-  zh: {
-    hero_tag: "可穿戴机器人 · 银发经济",
-    hero_h1: '为老年人<br>重拾<em>自主</em>与尊严。',
-    hero_sub: "KineticCare Italia 致力于将先进的可穿戴外骨骼技术引入意大利及欧洲市场，连接亚洲技术创新与欧洲临床需求。",
-    hero_cta1: "联系我们",
-    hero_cta2: "了解更多",
-    stat1: "欧盟老龄化程度最高国家",
-    stat2: "当前65岁以上意大利人口",
-    stat3: "全球外骨骼市场复合年增长率",
-    stat4: "2030年意大利私人医疗市场规模",
-    mission_tag: "关于我们",
-    mission_title: '面向未来移动出行的<em>愿景</em>。',
-    mission_body: "KineticCare Italia 是一家专注于进口、验证和分销可穿戴机器人技术（外骨骼）的企业，服务于意大利及欧洲市场。我们的目标是弥合亚洲技术创新与欧洲临床市场之间的差距，让先进机器人技术真正触达最需要它的人。",
-    card1_title: "临床网络",
-    card1_body: "与物理治疗诊所、康复中心及养老机构（RSA）建立直接合作关系，用于产品测试、验证及B2B分销。",
-    card2_title: "CE MDR认证",
-    card2_body: "全程负责欧洲认证流程（EU 2017/745）及机器人医疗设备的GDPR合规管理。",
-    card3_title: "欧盟市场门户",
-    card3_body: "以意大利为首发市场，构建可扩展模式，逐步进入德国、法国、西班牙及整个欧盟市场。",
-    card4_title: "三渠道模式",
-    card4_body: "面向医疗机构的B2B销售、结合物理治疗咨询的B2C电商，以及面向术后康复的长期租赁服务。",
-    contact_tag: "联系方式",
-    contact_title: "期待与您<em>携手合作。</em>",
-    contact_body: "您是制造商、分销商、医疗从业者，还是对欧洲银发经济感兴趣的投资者？欢迎联系我们——我们将在24小时内回复。",
-    wechat_label: 'WeChat: <strong style="color:var(--accent)">bogdan_kineticcare</strong>',
-    location: "意大利卡萨莱蒙费拉托",
-    form_name: "姓名",
-    form_company: "公司",
-    form_email: "电子邮件",
-    form_role_label: "角色 / 意向",
-    form_role_default: "请选择...",
-    form_role_1: "制造商 / 供应商",
-    form_role_2: "诊所 / 康复中心",
-    form_role_3: "投资者 / 合作伙伴",
-    form_role_4: "分销商",
-    form_role_5: "其他",
-    form_message: "留言",
-    form_message_ph: "请简要介绍您的合作意向...",
-    form_submit: "发送消息",
-    form_note: "我们将在24个工作小时内回复您。",
-    form_success: "消息已发送！我们将尽快与您联系。",
-    footer_copy: "© 2026 KineticCare Italia · 意大利卡萨莱蒙费拉托 · business@kineticcare.it",
-  }
-};
-
-let currentLang = 'it';
-
-function setLang(lang) {
-  currentLang = lang;
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
-  document.documentElement.lang = lang;
-  applyTranslations(lang);
-}
-
-function applyTranslations(lang) {
-  const t = i18n[lang];
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) el.innerHTML = t[key];
-  });
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    const key = el.getAttribute('data-i18n-placeholder');
-    if (t[key] !== undefined) el.placeholder = t[key];
-  });
-}
-
-function submitForm(e) {
-  e.preventDefault();
-  const form = document.getElementById('contactForm');
-  const success = document.getElementById('formSuccess');
-  // In produzione: sostituire con chiamata API / Formspree / EmailJS
-  const data = new FormData(form);
-  const email = data.get('email');
-  // Simula invio
-  form.style.display = 'none';
-  success.style.display = 'block';
-  // Fallback: apri client email
-  setTimeout(() => {
-    const name = data.get('name') || '';
-    const company = data.get('company') || '';
-    const msg = data.get('message') || '';
-    const subject = encodeURIComponent('KineticCare - Contatto dal sito');
-    const body = encodeURIComponent(`Nome: ${name}\nAzienda: ${company}\nEmail: ${email}\n\n${msg}`);
-    window.location.href = `mailto:business@kineticcare.it?subject=${subject}&body=${body}`;
-  }, 800);
-}
-
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
+const i18n={it:{hero_tag:"Robotica Indossabile · Silver Economy",hero_h1:"Restituire <em>autonomia</em><br>e dignità agli anziani.",hero_sub:"KineticCare Italia porta la tecnologia degli esoscheletri indossabili nel mercato italiano ed europeo, per ridare mobilità e indipendenza a chi ne ha più bisogno.",hero_cta1:"Contattaci",hero_cta2:"Come funziona",stat1:"Paese più anziano dell'UE",stat2:"Italiani over 65 oggi",stat3:"CAGR mercato esoscheletri",stat4:"Sanità privata italiana 2030",what_badge:"Tecnologia CE MDR",what_tag:"Cosa facciamo",what_title:"Un <em>esoscheletro</em><br>per chi vuole tornare a camminare.",what_body:"Un esoscheletro è un dispositivo robotico indossabile che si applica agli arti inferiori e assiste il movimento di chi ha difficoltà motorie. Attraverso sensori e attuatori motorizzati, supporta ogni passo — permettendo ad anziani, pazienti post-ictus e persone in riabilitazione di recuperare mobilità e autonomia.",what_p1:"Indicato per anziani con limitazioni motorie, post-ictus, post-chirurgici",what_p2:"Uso domiciliare e clinico — leggero, personalizzabile, semplice da indossare",what_p3:"Prezzo accessibile sotto i €3.000 — primo nel segmento in Italia",how_tag:"Il nostro modello",how_title:"Come <em>portiamo</em> la tecnologia al paziente.",how1_title:"Importazione & Certificazione",how1_body:"Importiamo esoscheletri dal partner produttore in Asia e gestiamo il processo CE MDR (EU 2017/745), rendendo il prodotto commerciabile in tutta Europa.",how2_title:"Distribuzione Clinica & Retail",how2_body:"Tre canali: vendita B2B a cliniche e RSA, vendita B2C diretta con consulenza fisioterapica, e noleggio mensile per riabilitazione post-operatoria.",how3_title:"Assistenza & Dopo-Vendita",how3_body:"Centro tecnico a Casale Monferrato per manutenzione, garanzia e ricambi. Supporto fisioterapico e monitoraggio continuativo del percorso di recupero.",mission_tag:"I nostri asset",mission_title:"Perché <em>KineticCare</em> è il partner giusto.",card1_title:"Rete Clinica",card1_body:"Collaborazioni con cliniche, centri di riabilitazione e RSA per test, validazione e distribuzione B2B in tutta Italia.",card2_title:"Certificazione CE MDR",card2_body:"Gestione completa della certificazione europea (EU 2017/745) e conformità GDPR per dispositivi medici robotici.",card3_title:"Gateway Europeo",card3_body:"Italia come mercato di lancio. Modello scalabile verso Germania, Francia, Spagna e l'intero mercato UE.",card4_title:"Modello Tri-Canale",card4_body:"B2B a strutture sanitarie, B2C via e-commerce con consulenza fisioterapica, e noleggio a lungo termine per riabilitazione.",contact_tag:"Contatti",contact_title:"Parliamo <em>insieme.</em>",contact_body:"Sei un produttore, distributore, operatore sanitario o investitore interessato alla Silver Economy europea? Scrivici — risponderemo entro 24 ore.",wechat_label:'WeChat: <strong style="color:var(--accent)">bogdan_kineticcare</strong>',location:"Casale Monferrato, Italia",form_name:"Nome",form_company:"Azienda",form_email:"Email",form_role_label:"Ruolo / Interesse",form_role_default:"Seleziona...",form_role_1:"Produttore / Fornitore",form_role_2:"Clinica / Centro Riabilitazione",form_role_3:"Investitore / Partner",form_role_4:"Distributore",form_role_5:"Altro",form_message:"Messaggio",form_message_ph:"Raccontaci brevemente il tuo interesse...",form_submit:"Invia messaggio",form_note:"Risponderemo entro 24 ore lavorative.",form_success:"Messaggio inviato! Ti risponderemo presto.",footer_copy:"© 2026 KineticCare Italia · Casale Monferrato · business@kineticcare.it"},en:{hero_tag:"Wearable Robotics · Silver Economy",hero_h1:"Restoring <em>autonomy</em><br>and dignity to the elderly.",hero_sub:"KineticCare Italia brings wearable exoskeleton technology to the Italian and European market, giving mobility and independence back to those who need it most.",hero_cta1:"Contact us",hero_cta2:"How it works",stat1:"Oldest population in the EU",stat2:"Italians over 65 today",stat3:"CAGR exoskeleton market",stat4:"Italian private healthcare 2030",what_badge:"CE MDR Technology",what_tag:"What we do",what_title:"An <em>exoskeleton</em><br>for those who want to walk again.",what_body:"An exoskeleton is a wearable robotic device applied to the lower limbs that assists movement for people with motor difficulties. Through sensors and motorized actuators, it supports every step — helping elderly people, post-stroke and post-surgical patients regain mobility and independence.",what_p1:"Suitable for elderly with motor limitations, post-stroke, post-surgical patients",what_p2:"Home and clinical use — lightweight, customizable, easy to wear",what_p3:"Accessible price under €3,000 — first product in this segment in Italy",how_tag:"Our model",how_title:"How we <em>bring</em> technology to the patient.",how1_title:"Import & Certification",how1_body:"We import exoskeletons from our Asian manufacturing partner and manage the full CE MDR (EU 2017/745) certification process, making the product legally marketable across Europe.",how2_title:"Clinical & Retail Distribution",how2_body:"Three channels: B2B sales to clinics and nursing homes, direct B2C with physiotherapy consultation, and monthly rental for post-surgical rehabilitation.",how3_title:"After-Sales Support",how3_body:"Dedicated technical center in Casale Monferrato for maintenance, warranty and spare parts. Physiotherapy support and continuous recovery monitoring for every client.",mission_tag:"Our assets",mission_title:"Why <em>KineticCare</em> is the right partner.",card1_title:"Clinical Network",card1_body:"Direct relationships with physiotherapy clinics, rehabilitation centers and nursing homes for testing, validation and B2B distribution across Italy.",card2_title:"CE MDR Certification",card2_body:"Full management of the European certification process (EU 2017/745) and GDPR compliance for robotic medical devices.",card3_title:"European Gateway",card3_body:"Italy as the launch market. Scalable model toward Germany, France, Spain and the entire EU.",card4_title:"Tri-Channel Model",card4_body:"B2B to healthcare facilities, B2C via e-commerce with physiotherapy consultation, and long-term rental for rehabilitation.",contact_tag:"Contact",contact_title:"Let's talk <em>together.</em>",contact_body:"Are you a manufacturer, distributor, healthcare operator or investor interested in the European Silver Economy? Write to us — we'll reply within 24 hours.",wechat_label:'WeChat: <strong style="color:var(--accent)">bogdan_kineticcare</strong>',location:"Casale Monferrato, Italy",form_name:"Name",form_company:"Company",form_email:"Email",form_role_label:"Role / Interest",form_role_default:"Select...",form_role_1:"Manufacturer / Supplier",form_role_2:"Clinic / Rehabilitation Center",form_role_3:"Investor / Partner",form_role_4:"Distributor",form_role_5:"Other",form_message:"Message",form_message_ph:"Tell us briefly about your interest...",form_submit:"Send message",form_note:"We will reply within 24 business hours.",form_success:"Message sent! We'll get back to you soon.",footer_copy:"© 2026 KineticCare Italia · Casale Monferrato · business@kineticcare.it"},zh:{hero_tag:"可穿戴机器人 · 银发经济",hero_h1:"为老年人<br>重拾<em>自主</em>与尊严。",hero_sub:"KineticCare Italia 将可穿戴外骨骼技术引入意大利及欧洲市场，帮助最需要它的人重获行动能力与独立生活。",hero_cta1:"联系我们",hero_cta2:"了解模式",stat1:"欧盟老龄化程度最高国家",stat2:"当前65岁以上意大利人口",stat3:"外骨骼市场复合年增长率",stat4:"2030年意大利私人医疗规模",what_badge:"CE MDR认证技术",what_tag:"我们做什么",what_title:"一款<em>外骨骼</em>，<br>为想重新行走的人而生。",what_body:"外骨骼是一种可穿戴机器人设备，佩戴于下肢，用于辅助行动障碍者的运动。通过传感器和电动执行器，它支撑每一个步伐——帮助老年人、脑卒中后遗症患者及康复期患者重获行动能力与生活自主。",what_p1:"适用于行动受限老年人、脑卒中后遗症、术后康复患者",what_p2:"家庭与临床双场景使用——轻便、可定制、易穿戴",what_p3:"售价低于3000欧元——意大利该细分市场首款产品",how_tag:"我们的模式",how_title:"我们如何将技术<em>带到</em>患者身边。",how1_title:"进口与认证",how1_body:"我们从亚洲制造合作伙伴进口外骨骼产品，并全程管理CE MDR（EU 2017/745）认证流程，使产品在欧洲全境合法销售。",how2_title:"临床与零售分销",how2_body:"通过三大渠道分销：面向诊所和养老机构的B2B销售、结合物理治疗咨询的B2C直销，以及面向术后康复的月度租赁服务。",how3_title:"售后服务支持",how3_body:"卡萨莱蒙费拉托设有专属技术服务中心，负责维护、保修及零配件供应。每位客户均可获得物理治疗支持和持续康复监测。",mission_tag:"我们的优势",mission_title:"为何<em>KineticCare</em>是理想合作伙伴。",card1_title:"临床网络",card1_body:"与意大利各地物理治疗诊所、康复中心及养老机构建立直接合作，用于产品测试、验证及B2B分销。",card2_title:"CE MDR认证",card2_body:"全程负责欧洲认证（EU 2017/745）及机器人医疗设备GDPR合规管理。",card3_title:"欧盟市场门户",card3_body:"以意大利为首发市场，可扩展模式逐步进入德国、法国、西班牙及整个欧盟。",card4_title:"三渠道模式",card4_body:"面向医疗机构的B2B、结合物理治疗咨询的B2C电商，及长期租赁康复服务。",contact_tag:"联系方式",contact_title:"期待与您<em>携手合作。</em>",contact_body:"您是制造商、分销商、医疗从业者还是对欧洲银发经济感兴趣的投资者？欢迎联系我们——24小时内回复。",wechat_label:'WeChat: <strong style="color:var(--accent)">bogdan_kineticcare</strong>',location:"意大利卡萨莱蒙费拉托",form_name:"姓名",form_company:"公司",form_email:"电子邮件",form_role_label:"角色 / 意向",form_role_default:"请选择...",form_role_1:"制造商 / 供应商",form_role_2:"诊所 / 康复中心",form_role_3:"投资者 / 合作伙伴",form_role_4:"分销商",form_role_5:"其他",form_message:"留言",form_message_ph:"请简要介绍您的合作意向...",form_submit:"发送消息",form_note:"我们将在24个工作小时内回复您。",form_success:"消息已发送！我们将尽快与您联系。",footer_copy:"© 2026 KineticCare Italia · 意大利卡萨莱蒙费拉托 · business@kineticcare.it"}};
+function setLang(lang){document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');document.documentElement.lang=lang;const t=i18n[lang];document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.innerHTML=t[k]});document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const k=el.getAttribute('data-i18n-placeholder');if(t[k]!==undefined)el.placeholder=t[k]})}
+function submitForm(e){e.preventDefault();const form=document.getElementById('contactForm');const data=new FormData(form);form.style.display='none';document.getElementById('formSuccess').style.display='block';setTimeout(()=>{const subject=encodeURIComponent('KineticCare - Contatto dal sito');const body=encodeURIComponent(`Nome: ${data.get('name')}\nAzienda: ${data.get('company')}\nEmail: ${data.get('email')}\n\n${data.get('message')}`);window.location.href=`mailto:business@kineticcare.it?subject=${subject}&body=${body}`},800)}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
 </script>
 </body>
 </html>
